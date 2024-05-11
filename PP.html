@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="PP.css">
+    <script src="PP.js"></script>
+</head>
+<body>
+    <div id="contenedorExterior">
+        <div id="contenedorInterior">
+            <div id="formulario" id="formulario"> 
+                <h1>Fomulario ABM</h1>
+                
+                <form action="" method="post">
+
+                    <label for="id">ID:</label>
+                    <input type="text" id="id" name="id">
+                    <br><br>
+            
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre">
+                    <br><br>
+            
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido">
+                    <br><br>
+            
+                    <label for="fechaNacimiento">Fecha de nacimiento:</label>
+                    <input type="number" id="fechaNacimiento" name="fechaNacimiento">
+                    <br><br>
+
+                    <label for="tipo">Tipo:</label>
+                    <select id="tipo" name="tipo">
+                        <option value="">Seleccione...</option>
+                        <option value="ciudadanos">Ciudadano</option>
+                        <option value="extranjeros">Extranjero</option>
+                    </select>
+                    <br><br>
+            
+                    <label for="dni">DNI:</label>
+                    <input type="number" id="dni" name="dni">
+                    <br><br>
+            
+                    <label for="paisOrigen">Pais de origen:</label>
+                    <input type="text" id="paisOrigen" name="paisOrigen">
+                    <br><br>
+            
+                    <button type="submit" id="btn_crear">Crear</button>
+                    <button type="submit" id="btn_modificar">Modificar</button>
+                    <button type="submit" id="btn_eliminar">Eliminar</button>
+                    <button type="submit" id="btn_cancelar">Cancelar</button>
+                </form>
+            </div>
+
+            <div id="formulario_datos">
+                <h1 id="h1_form_datos">Fomulario de Datos</h1>
+                        
+                <form action="" method="post">
+                    <label for="filtro">Filtrar por:</label>
+                    <select id="filtro" name="filtro">
+                        <option value="todos">Todos</option>
+                        <option value="ciudadanos">Ciudadano</option>
+                        <option value="extranjeros">Extranjero</option>
+                    </select>
+                    <br>
+                    <label for="edadPromedio">Edad Promedio:</label>
+                    <input type="number" id="edadPromedio" name="edadPromedio" readonly>
+                    <button type="button" id="btnCalcular">Calcular</button>
+                    <br>
+                    <label>Mostrar columnas:</label>
+                    <label><input type="checkbox" name="columna" value="id"> ID</label>
+                    <label><input type="checkbox" name="columna" value="nombre"> Nombre</label>
+                    <label><input type="checkbox" name="columna" value="apellido"> Apellido</label>
+                    <label><input type="checkbox" name="columna" value="edad"> FechaNacimiento</label>
+                    <label><input type="checkbox" name="columna" value="telefono"> DNI</label>
+                    <label><input type="checkbox" name="columna" value="compras">PaisOrigen</label>
+                </form>
+
+                <table id="tablaDatos">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>FechaNacimiento</th>
+                            <th>DNI</th>
+                            <th>PaisOrigen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+                <button type="submit" id="btn_agregar">Agregar</button>
+            
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const data = '[{"id":1,"apellido":"Serrano","nombre":"Horacio","fechaNacimiento":19840103,"dni":45876942},\n'+
+                      '{"id":2,"apellido":"Casas","nombre":"Julian","fechaNacimiento":19990723,"dni":98536214},\n'+
+                      '{"id":3,"apellido":"Galeano","nombre":"Julieta","fechaNacimiento":20081103,"dni":74859612},\n'+
+                      '{"id":4,"apellido":"Molina","nombre":"Juana","fechaNacimiento":19681201,"paisOrigen":"Paraguay"},\n'+
+                      '{"id":5,"apellido":"Barrichello","nombre":"Rubens","fechaNacimiento":19720523,"paisOrigen":"Brazil"},\n'+
+                      '{"id":666,"apellido":"Hkkinen","nombre":"Mika","fechaNacimiento":19680928,"paisOrigen":"Finlandia"}]';
+
+        const personas = JSON.parse(data);
+
+        const ciudadanos = [];
+        const extranjeros = [];
+
+        personas.forEach(obj => 
+        {
+            if ('dni' in obj) 
+            {
+                ciudadanos.push(new Ciudadano(obj.id, obj.nombre, obj.apellido, obj.fechaNacimiento, obj.dni));
+            } 
+            else if ('paisOrigen' in obj) 
+            {
+                extranjeros.push(new Extranjero(obj.id, obj.nombre, obj.apellido, obj.fechaNacimiento, obj.paisOrigen));
+            }
+        });
+
+    
+        const tabla = document.getElementById("tablaDatos");
+        const tbody = tabla.querySelector("tbody");
+
+        tbody.innerHTML = "";
+
+        personas.forEach(obj => 
+        {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+            <td>${obj.id || "-"}</td>
+            <td>${obj.nombre || "-"}</td>
+            <td>${obj.apellido || "-"}</td>
+            <td>${obj.fechaNacimiento || "-"}</td>
+            <td>${obj.dni || "-"}</td>
+            <td>${obj.paisOrigen || "-"}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        filtrar_datos();
+        btn_calcular_promedio();
+        selecciontabla();
+        btn_agregar();
+        seleccionTipo();
+        btn_modificar();
+        btn_cancelar();
+        alta_usuario();
+        console.log(personas);
+    </script>
+</body>
+</html>

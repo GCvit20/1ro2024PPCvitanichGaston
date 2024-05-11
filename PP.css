@@ -1,0 +1,80 @@
+body{
+    height: 55vw;
+    width: 100vw;
+    margin: 0px;
+    padding: 0px;
+    background-color: #eee;
+}
+#contenedorExterior {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+#contenedorInterior {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    height: 100%;
+}
+#formulario {
+    display: none;
+    height: 530px;
+    width: 500px;
+    border: 2px solid black;
+    margin: 0 auto; /* Centrar el formulario horizontalmente */
+    text-align: center; /* Centrar el texto dentro del formulario */
+}
+
+label {
+    display: inline-block; /* Convertir las etiquetas en bloques en línea */
+    width: 100px; /* Ancho fijo para las etiquetas */
+    text-align: right; /* Alinear el texto a la derecha */
+    margin-right: 10px; /* Espacio entre las etiquetas y los campos de entrada */
+}
+
+#btn_form
+{
+    margin-left: 110px;
+}
+
+#formulario_datos
+{
+    height: 50vh;
+    width: 100%;
+    border: 2px solid black;
+    margin-top: 10px;
+    background-color: #fff;
+}
+
+#h1_form_datos
+{
+    text-align: center;
+}
+
+#formulario_datos label,
+#formulario_datos input,
+#formulario_datos button,
+#formulario_datos select 
+{
+    display: inline;
+    margin-bottom: 20px; /* Ajusta el valor según tu preferencia */
+}
+
+#tablaDatos
+{
+    margin: 0 auto; /* Centrar el formulario horizontalmente */
+    text-align: center; /* Centrar el texto dentro del formulario */
+    width: 100%;
+    border: 2px solid black;
+    background-color: #fff;
+}
+
+#btn_agregar 
+{
+    margin-top: 15px;
+    margin-left: 35vh;
+}
